@@ -1,6 +1,6 @@
 [project]
 name = "mtcli-prevsession"
-version = "0.1.0"
+version = "1.0.0.dev0"
 description = "Plugin mtcli para exibicao de preços do pregão anterior"
 authors = [
     {name = "Valmir França",email = "vfranca3@gmail.com"}
