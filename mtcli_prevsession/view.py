@@ -24,26 +24,26 @@ class PrevSessionTextView:
         prices: SessionPrices,
         variations: List[Dict[str, float]],
     ) -> None:
-        print(f"Ativo: {symbol}")
+        print(f"Ativo {symbol}")
         print("-" * 60)
 
-        print("Pregão anterior:")
-        print(f"Preço de ajuste:      {self._fmt_price(prices.ajuste)}")
-        print(f"Preço de fechamento: {self._fmt_price(prices.fechamento)}")
-        print(f"VWAP do dia:          {self._fmt_price(prices.vwap)}")
-        print(f"Preço mínimo:         {self._fmt_price(prices.minimo)}")
-        print(f"Preço máximo:         {self._fmt_price(prices.maximo)}")
+        print("Pregao anterior")
+        print(f"Ajuste      {self._fmt_price(prices.ajuste)}")
+        print(f"Fechamento {self._fmt_price(prices.fechamento)}")
+        print(f"VWAP          {self._fmt_price(prices.vwap)}")
+        print(f"Minima         {self._fmt_price(prices.minimo)}")
+        print(f"Maxima         {self._fmt_price(prices.maximo)}")
 
         print("-" * 60)
-        print("Pregão atual:")
-        print(f"Preço de abertura:    {self._fmt_price(prices.abertura_atual)}")
+        print("Pregao atual")
+        print(f"Abertura    {self._fmt_price(prices.abertura_atual)}")
 
         print("-" * 60)
-        print("Variações percentuais em relação ao ajuste:")
+        print("Variacoes percentuais do ajuste")
 
         for v in variations:
             pct = f"{v['percent']:.1f}%"
             alta = self._fmt_price(v["alta"])
             baixa = self._fmt_price(v["baixa"])
 
-            print(f"{pct} acima: {alta} | {pct} abaixo: {baixa}")
+            print(f"+{pct} {alta} | -{pct} {baixa}")
