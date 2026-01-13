@@ -1,5 +1,6 @@
 """
-Controller que orquestra model e view.
+Controller do plugin prevsession.
+Responsável apenas por obter os preços estruturais do pregão.
 """
 
 from .model import PrevSessionModel
@@ -10,6 +11,4 @@ class PrevSessionController:
         self.model = PrevSessionModel(symbol)
 
     def run(self):
-        prices = self.model.get_session_prices()
-        variations = self.model.calc_variations(prices.ajuste)
-        return prices, variations
+        return self.model.get_session_prices()

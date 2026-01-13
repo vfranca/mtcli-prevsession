@@ -26,5 +26,5 @@ def prevsession(symbol: str):
     controller = PrevSessionController(symbol)
     view = PrevSessionTextView()
 
-    prices, variations = controller.run()
-    view.render(symbol, prices, variations)
+    prices = controller.run()
+    view.render(symbol, prices)

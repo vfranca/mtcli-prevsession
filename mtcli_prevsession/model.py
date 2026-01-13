@@ -3,7 +3,6 @@ Model responsável por:
 - Identificar corretamente o pregão anterior na B3
 - Funcionar em dias úteis, finais de semana e feriados
 - Extrair preços estruturais do D1 via MetaTrader 5
-- Calcular variações percentuais a partir do preço de ajuste
 
 Regras:
 - Nunca usar datas para identificar pregão
@@ -50,19 +49,15 @@ class PrevSessionModel:
         self._ensure_mt5()
 
         try:
-            # Tenta obter até 2 candles diários
             rates = mt5.copy_rates_from_pos(self.symbol, mt5.TIMEFRAME_D1, 0, 2)
 
             if rates is None or len(rates) == 0:
                 raise RuntimeError("Sem candles diários disponíveis no MT5")
 
-            # Caso normal: pregão em andamento ou candle atual criado
             if len(rates) == 2:
                 current = rates[0]
                 prev = rates[1]
                 abertura_atual = current["open"]
-
-            # Caso sábado / domingo / feriado
             else:
                 prev = rates[0]
                 abertura_atual = prev["open"]
@@ -90,29 +85,3 @@ class PrevSessionModel:
 
         finally:
             self._shutdown_mt5()
-
-    def calc_variations(
-        self, ajuste: float, step: float = 0.5, limit: float = 3.0
-    ) -> list[dict[str, float]]:
-        """
-        Calcula níveis percentuais simétricos acima e abaixo
-        do preço de ajuste.
-
-        Padrão:
-        - De 0,5% até 3,0%
-        """
-
-        variations: list[dict[str, float]] = []
-        pct = step
-
-        while pct <= limit + 1e-9:
-            variations.append(
-                {
-                    "percent": pct,
-                    "alta": ajuste * (1 + pct / 100),
-                    "baixa": ajuste * (1 - pct / 100),
-                }
-            )
-            pct += step
-
-        return variations
